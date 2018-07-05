@@ -1,4 +1,6 @@
-# web-scraper
+
+
+# web-scraper [![Build Status](https://travis-ci.org/jgdonas/web-scraper.svg?branch=master)](https://travis-ci.org/jgdonas/web-scraper)
 A simple web scraper for node.js using promises and css selectors.
 
 ## How it works
