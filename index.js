@@ -20,19 +20,18 @@ var scrape = function(params){
 
         var data = [];
         var $ = cheerio.load(html);
-        var root = params.node;
 
-        if(undefined === root){
-          root = 'body';
+        if(undefined === params.forEach){
+          params.forEach = 'html';
         }
 
-        $(root).map((index,element) => {
+        $(params.forEach).map((index,element) => {
           data[index] = {};
           Object.keys(params.get).forEach( key => {
             var selector = params.get[key];
             data[index][key] = [];
             $(element).find(selector).each((i,element) => {
-              data[index][key].push($(element).text());
+              data[index][key].push($(element).text().trim());
             });
           });
         });

@@ -6,7 +6,7 @@ describe('Web scraper', () => {
     it('should reject no url param', done => {
 
         var mySearch  = {
-          node: "#element",
+          forEach: "#element",
           get: {
             prop: 'tr td'
           }
@@ -28,7 +28,7 @@ describe('Web scraper', () => {
 
       var mySearch  = {
         url: 'http://toastytech.com/evil/',
-        node: '#element'
+        forEach: '#element'
       };
 
       scraper(mySearch)
@@ -48,7 +48,7 @@ describe('Web scraper', () => {
       var mySearch  = {
         url: 'http://toastytech.com/evil/',
         get:{},
-        node: '#element'
+        forEach: '#element'
       };
 
       scraper(mySearch)
@@ -70,7 +70,7 @@ describe('Web scraper', () => {
         get:{
           name: 'td tr'
         },
-        node: '#element'
+        forEach: '#element'
       };
 
       scraper(mySearch)
@@ -93,7 +93,7 @@ describe('Web scraper', () => {
         get:{
           title: 'title'
         },
-        node: 'html'
+        forEach: 'html'
       };
 
       scraper(mySearch)
@@ -118,7 +118,7 @@ describe('Web scraper', () => {
         get:{
           linksTexts: 'table tr td a'
         },
-        node: 'body'
+        forEach: 'body'
       };
 
       scraper(mySearch)
@@ -143,7 +143,7 @@ describe('Web scraper', () => {
         get:{
           linksTexts: 'tr td a'
         },
-        node: 'body table'
+        forEach: 'body table'
       };
 
       scraper(mySearch)
