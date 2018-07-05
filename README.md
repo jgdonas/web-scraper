@@ -39,7 +39,7 @@ this will return:
 [ { filmTitle: [ 'Matrix (1999) - IMDb' ] } ]
 ```
 
-As you can see, the result is always an array, regardless the number of elements returned.
+Notice that the result is always an array, regardless the number of elements returned.
 This way you won't need to check wether the result is a single element or a set of the, simply
 traverse the array! We'll see it in some following examples, but let's continue with The Matrix.
 
