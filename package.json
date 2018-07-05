@@ -1,7 +1,7 @@
 {
-  "name": "web-scraper",
+  "name": "@jose.donas/web-scraper",
   "version": "1.0.0",
-  "description": "A simple web scraper for node.js using promises.",
+  "description": "A simple web scraper for node.js using promises and css selectors.",
   "main": "index.js",
   "scripts": {
     "test": "mocha --reporter spec"
@@ -20,7 +20,7 @@
   "author": "Jose Antonio Gonzalez Doñas <jose.gonzalez.donas@gmail.com>",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/jgdonas/web-scraper/issues"
+    "url": "https://gpithub.com/jgdonas/web-scraper/issues"
   },
   "homepage": "https://github.com/jgdonas/web-scraper#readme",
   "dependencies": {
