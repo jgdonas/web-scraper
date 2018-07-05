@@ -136,7 +136,7 @@ describe('Web scraper', () => {
       });
     });
 
-    it('should return all the elements grouped by table inside separated objects',done => {
+    it('should return all the elements grouped by table inside separated objects', done => {
 
       var mySearch  = {
         url: 'http://usatoday30.usatoday.com/sports/baseball/sbfant.htm',
