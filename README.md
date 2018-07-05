@@ -1,7 +1,7 @@
 # web-scraper
 A simple web scraper for node.js using promises and css selectors.
 
-##How it works
+## How it works
 
 All you need is define an json object with:
 * **url**: the web page url to be scraped (mandatory)
@@ -15,7 +15,7 @@ Briefly:
 for each **forEach** element found in the web DOM, **web-scraper** will return an object with the same structure as
 the **get** param containing the data in the corresponding property. Let's see some examples.
 
-##Examples
+## Examples
 
 In this example, we are fetching some data from [The Matrix page at IMDB](https://www.imdb.com/title/tt0133093/)
 
