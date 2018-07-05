@@ -179,14 +179,9 @@ Will return us:
   ]
 ```
 
-
-
-
-####
-
 Check out the [test folder](https://github.com/jgdonas/web-scraper/tree/master/test) to find more examples.
 
-###Tests
+### Tests
 
 You can run the tests executing
 
