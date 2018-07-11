@@ -52,10 +52,10 @@ scraper(mySearch2_retry)
 //Example #3
 var mySearch3 = {
   url : 'https://www.imdb.com/title/tt0133093/',
-  get:{/media/jd/data/sincronizada/Ing. software/TFG/web-scraper-antiguo/
+  get:{
     names: 'span[itemprop="name"]'
   },
-  forEach:'div#titleCast'/media/jd/data/sincronizada/Ing. software/TFG/web-scraper-antiguo/
+  forEach:'div#titleCast'
 } ;
 
 scraper(mySearch3)
