@@ -181,6 +181,33 @@ Will return us:
   ]
 ```
 
+#### 5. Gathering links
+
+Links ("a" elements) can be considered quite special because they contain a couple of elements we may want to store:
+the **href** attribute and the **anchor text**. That's why when we ask our scraper to gather **a** elements, it'll
+return us both pieces of data. An example where we are interested in a single link:
+
+```
+var mySearch  = {
+  url: 'https://www.forocoches.com',
+  get:{
+    linkToTwitter: 'ul#tablist a[target="_blank"]'
+  }
+};
+```
+
+Will return us:
+
+```
+[{
+  "linkToTwitter":[{
+    "anchorText": "Twitter FC",
+    "href":       "https://twitter.com/forocoches"
+   }]
+}]
+
+```  
+
 Check out the [test folder](https://github.com/jgdonas/web-scraper/tree/master/test) to find more examples.
 
 ### Tests

@@ -31,7 +31,14 @@ var scrape = function(params){
             var selector = params.get[key];
             data[index][key] = [];
             $(element).find(selector).each((i,element) => {
-              data[index][key].push($(element).text().trim());
+              var e = $(element);
+              if(e.is("a")){
+                var text = e.text().trim();
+                var href = e.attr('href');
+                data[index][key].push({anchorText:text,href:href});
+              }else{
+                data[index][key].push($(element).text().trim());
+              }
             });
           });
         });

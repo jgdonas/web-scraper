@@ -63,7 +63,7 @@ describe('Web scraper', () => {
       .catch(done);
     });
 
-    it('should reject false, malformed or non-exixtent url',done =>{
+    it('should reject: false, malformed or non-exixtent url',done =>{
 
       var mySearch  = {
         url: 'http://toastytech.come/evil/',
@@ -116,7 +116,7 @@ describe('Web scraper', () => {
       var mySearch  = {
         url: 'http://usatoday30.usatoday.com/sports/baseball/sbfant.htm',
         get:{
-          linksTexts: 'table tr td a'
+          links: 'table tr td a'
         },
         forEach: 'body'
       };
@@ -125,9 +125,9 @@ describe('Web scraper', () => {
       .then((data) => {
         var expectedNumberOfLinks = 26;
         assert.isDefined(data);
-        assert.isDefined(data[0].linksTexts);
+        assert.isDefined(data[0].links);
         expect(data.length).to.equal(1);
-        expect(data[0].linksTexts.length).to.equal(expectedNumberOfLinks);
+        expect(data[0].links.length).to.equal(expectedNumberOfLinks);
         done();
       })
       .catch(done)
@@ -141,7 +141,7 @@ describe('Web scraper', () => {
       var mySearch  = {
         url: 'http://usatoday30.usatoday.com/sports/baseball/sbfant.htm',
         get:{
-          linksTexts: 'tr td a'
+          links: 'tr td a'
         },
         forEach: 'body table'
       };
@@ -151,11 +151,11 @@ describe('Web scraper', () => {
         var expectedNumberOfLinksInFirstTable = 10;
         var expectedNumberOfLinksInSecondTable = 16;
         assert.isDefined(data);
-        assert.isDefined(data[0].linksTexts);
-        assert.isDefined(data[1].linksTexts);
+        assert.isDefined(data[0].links);
+        assert.isDefined(data[1].links);
         expect(data.length).to.equal(2);
-        expect(data[0].linksTexts.length).to.equal(expectedNumberOfLinksInFirstTable);
-        expect(data[1].linksTexts.length).to.equal(expectedNumberOfLinksInSecondTable);
+        expect(data[0].links.length).to.equal(expectedNumberOfLinksInFirstTable);
+        expect(data[1].links.length).to.equal(expectedNumberOfLinksInSecondTable);
         done();
       })
       .catch(done)
@@ -163,4 +163,30 @@ describe('Web scraper', () => {
         done(new Error('Expected method to resolve.'));
       });
     });
+
+    it('should return both anchor text and href when "a" element requested', done =>{
+
+      var mySearch  = {
+        url: 'https://www.forocoches.com',
+        get:{
+          linkToTwitter: 'ul#tablist a[target="_blank"]'
+        }
+      };
+
+      scraper(mySearch)
+      .then( data => {
+        const expectedAnchorText = 'Twitter FC';
+        const expectedHref = 'https://twitter.com/forocoches'
+        assert.isDefined(data);
+        assert.isDefined(data[0].linkToTwitter[0].anchorText);
+        assert.isDefined(data[0].linkToTwitter[0].href);
+        expect(data[0].linkToTwitter[0].anchorText).to.equal(expectedAnchorText);
+        expect(data[0].linkToTwitter[0].href).to.equal(expectedHref);
+        done();
+      })
+      .catch(done)
+      .catch(err => {
+        done(new Error('Expected method to resolve.'))
+      })
+    })
 });
