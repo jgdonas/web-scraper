@@ -29,25 +29,26 @@ Our search params will be:
 var mySearch = {
   url : 'https://www.imdb.com/title/tt0133093/',
   get:{
-    filmTitle: 'title'
+    filmTitle: 'div#ratingWidget p strong'
   }
 } ;
 ```
 this will return:
 
 ```
-[ { filmTitle: [ 'Matrix (1999) - IMDb' ] } ]
+{
+    "filmTitle": "Matrix"
+}
 ```
 
-Notice that the result is always an array, regardless the number of elements returned.
-This way you won't need to check wether the result is a single element or a set of the, simply
-traverse the array! We'll see it in some following examples, but let's continue with The Matrix.
+Notice that the result will be an array, only if the search result contains more than one element.
+This way you will need to check wether the result is a single element or a set of them.
+We'll see it in some following examples, but let's continue with The Matrix.
 
-#### 2. Get the film name without the release year, available from a indentified element's children node
+#### 2. Get the film name with a different search params.
 
-As you can see, the fetched element contains both the film title and release year, which maybe you
-are not interested in. We can choose another element in the web, for example the **strong** element
-inside a **div** with the **id ratingWidget**.
+For every search, we can find several ways to get the desired data. In this case, we can get the film
+title with this configuration:
 
 ```
 var mySearch = {
@@ -59,39 +60,16 @@ var mySearch = {
 } ;
 ```
 
-returning:
+With this configuration we are requesting our scraper to search for a **strong** element inside every **p** that 
+is children of **div#ratingWidget**. But in the inspected DOM, this only ocurrs one time. Any way, our scraper will
+ignore empty result, so again, we will get:
+
 
 ```
-[ { filmTitle: [ 'Matrix' ] },
-  { filmTitle: [] },
-  { filmTitle: [] } ]
+{
+    "filmTitle": "Matrix"
+}
 ```
-Why is this request returning three objects, including two with empty data? This is because with
-the 'div#ratingWidget p' selector, we asked our scraper to look for the data inside the **strong**
-element inside every **p** element that it a child node of the **div with the 'ratingWidget' id**,
-but we know that there's only one **strong** element, so how can we fix this?
-
-Let's try again:
-
-```
-var mySearch = {
-  url : 'https://www.imdb.com/title/tt0133093/',
-  get:{
-    filmTitle: 'strong'
-  },
-  forEach:'div#ratingWidget'
-} ;
-```
-
-Now we have what we wanted!
-
-```
-[ { filmTitle: [ 'Matrix' ] } ]
-```
-
-This is because now we asked our scraper to search inside the **div#ratingWidget**
-and get the data inside any **strong** element, which is unique, thus we get just
-one object.
 
 #### 3. Get all the cast inside a single object.
 
@@ -112,7 +90,7 @@ In this case, since there is **just one element** identified with 'div#titleCast
 **just one object** containing an array of names, one for each actor/actress:
 
 ```
-[ { names:
+ { names:
      [ 'Keanu Reeves',
        'Laurence Fishburne',
        'Carrie-Anne Moss',
@@ -127,7 +105,9 @@ In this case, since there is **just one element** identified with 'div#titleCast
        'Paul Goddard',
        'Robert Taylor',
        'David Aston',
-       'Marc Aden Gray' ] } ]
+       'Marc Aden Gray' 
+      ] 
+  } 
 ```
 
 #### 4. Get one object for each actor and actress, containing the character's name too.
@@ -148,37 +128,68 @@ var mySearch = {
 Will return us:
 
 ```
-[ { name: [ 'Keanu Reeves' ],
-    character: [ 'Neo' ] },
-  { name: [ 'Laurence Fishburne' ],
-    character: [ 'Morpheus' ] },
-  { name: [ 'Carrie-Anne Moss' ],
-    character: [ 'Trinity' ] },
-  { name: [ 'Hugo Weaving' ],
-    character: [ 'Agent Smith' ] },
-  { name: [ 'Gloria Foster' ],
-    character: [ 'Oracle' ] },
-  { name: [ 'Joe Pantoliano' ],
-    character: [ 'Cypher' ] },
-  { name: [ 'Marcus Chong' ],
-    character: [ 'Tank' ] },
-  { name: [ 'Julian Arahanga' ],
-    character: [ 'Apoc' ] },
-  { name: [ 'Matt Doran' ],
-    character: [ 'Mouse' ] },
-  { name: [ 'Belinda McClory' ],
-    character: [ 'Switch' ] },
-  { name: [ 'Anthony Ray Parker' ],
-    character: [ 'Dozer' ] },
-  { name: [ 'Paul Goddard' ],
-    character: [ 'Agent Brown' ] },
-  { name: [ 'Robert Taylor' ],
-    character: [ 'Agent Jones' ] },
-  { name: [ 'David Aston' ],
-    character: [ 'Rhineheart' ] },
-  { name: [ 'Marc Aden Gray' ],
-    character: [ 'Choi \n  \n  \n  (as Marc Gray)' ] }
-  ]
+[
+    {
+        "name": "Keanu Reeves",
+        "character": "Neo"
+    },
+    {
+        "name": "Laurence Fishburne",
+        "character": "Morpheus"
+    },
+    {
+        "name": "Carrie-Anne Moss",
+        "character": "Trinity"
+    },
+    {
+        "name": "Hugo Weaving",
+        "character": "Agent Smith"
+    },
+    {
+        "name": "Gloria Foster",
+        "character": "Oracle"
+    },
+    {
+        "name": "Joe Pantoliano",
+        "character": "Cypher"
+    },
+    {
+        "name": "Marcus Chong",
+        "character": "Tank"
+    },
+    {
+        "name": "Julian Arahanga",
+        "character": "Apoc"
+    },
+    {
+        "name": "Matt Doran",
+        "character": "Mouse"
+    },
+    {
+        "name": "Belinda McClory",
+        "character": "Switch"
+    },
+    {
+        "name": "Anthony Ray Parker",
+        "character": "Dozer"
+    },
+    {
+        "name": "Paul Goddard",
+        "character": "Agent Brown"
+    },
+    {
+        "name": "Robert Taylor",
+        "character": "Agent Jones"
+    },
+    {
+        "name": "David Aston",
+        "character": "Rhineheart"
+    },
+    {
+        "name": "Marc Aden Gray",
+        "character": "Choi (as Marc Gray)"
+    }
+]
 ```
 
 #### 5. Gathering links
@@ -199,12 +210,12 @@ var mySearch  = {
 Will return us:
 
 ```
-[{
-  "linkToTwitter":[{
+{
+  "linkToTwitter":{
     "anchorText": "Twitter FC",
     "href":       "https://twitter.com/forocoches"
-   }]
-}]
+   }
+}
 
 ```  
 

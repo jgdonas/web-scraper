@@ -5,13 +5,13 @@ var scraper = require('./index');
 var mySearch1 = {
   url : 'https://www.imdb.com/title/tt0133093/',
   get:{
-    filmTitle: 'title'
+    filmTitle: 'div#ratingWidget p strong'
   }
 } ;
 
 scraper(mySearch1)
 .then(data => {
-  console.log('Example#1 result: ',data);
+  console.log('Example#1 result: ', JSON.stringify(data, null, 4,));
 }).catch(error => {
   console.log(error);
 });
@@ -28,13 +28,13 @@ var mySearch2 = {
 
 scraper(mySearch2)
 .then(data => {
-  console.log('Example#2 result: ',data);
+  console.log('Example#2 result: ', JSON.stringify(data, null, 4,));
 }).catch(error => {
   console.log(error);
 });
 
-//Example #2, second chance
-var mySearch2_retry = {
+//Example #2, second way
+var mySearch2_way = {
   url : 'https://www.imdb.com/title/tt0133093/',
   get:{
     filmTitle: 'strong'
@@ -42,9 +42,9 @@ var mySearch2_retry = {
   forEach:'div#ratingWidget'
 } ;
 
-scraper(mySearch2_retry)
+scraper(mySearch2_way)
 .then(data => {
-  console.log('Example#2 retried result: ',data);
+  console.log('Example#2 second way result: ', JSON.stringify(data, null, 4,));
 }).catch(error => {
   console.log(error);
 });
@@ -60,7 +60,7 @@ var mySearch3 = {
 
 scraper(mySearch3)
 .then(data => {
-  console.log('Example#3 result: ',data);
+  console.log('Example#3 result: ', JSON.stringify(data, null, 4,));
 }).catch(error => {
   console.log(error);
 });
@@ -78,7 +78,7 @@ var mySearch4 = {
 
 scraper(mySearch4)
 .then(data => {
-  console.log('Example#4 result: ',data);
+  console.log('Example#4 result: ', JSON.stringify(data, null, 4,));
 }).catch(error => {
   console.log(error);
 });

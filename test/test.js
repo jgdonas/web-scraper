@@ -99,9 +99,8 @@ describe('Web scraper', () => {
       scraper(mySearch)
       .then((data) => {
         assert.isDefined(data);
-        assert.isDefined(data[0].title);
-        expect(data.length).to.equal(1);
-        expect(data[0].title[0]).to.equal('Fantasy baseball home page');
+        assert.isDefined(data.title);
+        expect(data.title).to.equal('Fantasy baseball home page');
         done();
       })
       .catch(done)
@@ -123,11 +122,11 @@ describe('Web scraper', () => {
 
       scraper(mySearch)
       .then((data) => {
+        console.log(data);
         var expectedNumberOfLinks = 26;
         assert.isDefined(data);
-        assert.isDefined(data[0].links);
-        expect(data.length).to.equal(1);
-        expect(data[0].links.length).to.equal(expectedNumberOfLinks);
+        assert.isDefined(data.links);
+        expect(data.links.length).to.equal(expectedNumberOfLinks);
         done();
       })
       .catch(done)
@@ -178,10 +177,10 @@ describe('Web scraper', () => {
         const expectedAnchorText = 'Twitter FC';
         const expectedHref = 'https://twitter.com/forocoches'
         assert.isDefined(data);
-        assert.isDefined(data[0].linkToTwitter[0].anchorText);
-        assert.isDefined(data[0].linkToTwitter[0].href);
-        expect(data[0].linkToTwitter[0].anchorText).to.equal(expectedAnchorText);
-        expect(data[0].linkToTwitter[0].href).to.equal(expectedHref);
+        assert.isDefined(data.linkToTwitter.anchorText);
+        assert.isDefined(data.linkToTwitter.href);
+        expect(data.linkToTwitter.anchorText).to.equal(expectedAnchorText);
+        expect(data.linkToTwitter.href).to.equal(expectedHref);
         done();
       })
       .catch(done)

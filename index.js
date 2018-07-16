@@ -1,6 +1,6 @@
-var request = require('request');
-var cheerio = require('cheerio');
-
+const request = require('request');
+const cheerio = require('cheerio');
+const _ = require('lodash');
 var scraper = function(params){
 
   return new Promise((resolve,reject) => {
@@ -26,22 +26,40 @@ var scraper = function(params){
         }
 
         $(params.forEach).map((index,element) => {
-          data[index] = {};
+          var tempObject = {};
           Object.keys(params.get).forEach( key => {
             var selector = params.get[key];
-            data[index][key] = [];
+            var tempData = [];
             $(element).find(selector).each((i,element) => {
               var e = $(element);
               if(e.is("a")){
-                var text = e.text().trim();
+                var text = e.text().trim().replace(/[\t\n]+/g, '').replace(/  +/g, ' ');
                 var href = e.attr('href');
-                data[index][key].push({anchorText:text,href:href});
+                tempData.push({anchorText:text,href:href});
               }else{
-                data[index][key].push($(element).text().trim());
+                var text = e.text().trim().replace(/[\t\n]+/g, '').replace(/  +/g, ' ');
+                if(text.length > 0){
+                  tempData.push(text);
+                }
+              }
+              if(1 === tempData.length){       
+                tempObject[key] = tempData[0];
+              }else if(2 >= tempData.length){
+                tempObject[key] = tempData;
               }
             });
           });
+
+          if(!_.isEmpty(tempObject)){
+            data.push(tempObject);
+          }
+
         });
+
+        if(1 === data.length){
+          data = data[0]               
+        }
+
         resolve(data);
       }
     });
