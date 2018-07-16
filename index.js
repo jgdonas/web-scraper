@@ -1,7 +1,7 @@
 var request = require('request');
 var cheerio = require('cheerio');
 
-var scrape = function(params){
+var scraper = function(params){
 
   return new Promise((resolve,reject) => {
     if(params.url === undefined){
@@ -48,4 +48,4 @@ var scrape = function(params){
   });
 }
 
-module.exports = scrape;
+module.exports = scraper;
