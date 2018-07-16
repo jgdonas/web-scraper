@@ -122,7 +122,6 @@ describe('Web scraper', () => {
 
       scraper(mySearch)
       .then((data) => {
-        console.log(data);
         var expectedNumberOfLinks = 26;
         assert.isDefined(data);
         assert.isDefined(data.links);
