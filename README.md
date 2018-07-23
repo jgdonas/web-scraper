@@ -229,6 +229,15 @@ npm test
 ```
 from console.
 
+### Installation
+
+Installation is quite easy using npm:
+
+```
+npm i @jose.donas/web-scraper
+```
+Actually, you can get more interesting info about this module at [web-scraper npm web page](https://www.npmjs.com/package/@jose.donas/web-scraper)
+
 ## Author
 
 * **Jose Antonio González Doñas** -  [LinkedIn](https://www.linkedin.com/in/jose-antonio-gonzalez-donas/)
