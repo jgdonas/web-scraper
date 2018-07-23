@@ -64,7 +64,6 @@ With this configuration we are requesting our scraper to search for a **strong**
 is children of **div#ratingWidget**. But in the inspected DOM, this only ocurrs one time. Any way, our scraper will
 ignore empty result, so again, we will get:
 
-
 ```
 {
     "filmTitle": "Matrix"

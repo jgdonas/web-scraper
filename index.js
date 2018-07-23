@@ -1,6 +1,10 @@
 const request = require('request');
-const cheerio = require('cheerio');
+let cheerio = require('cheerio');
+const advanced_cheerio = require('cheerio-advanced-selectors');
 const _ = require('lodash');
+
+cheerio = advanced_cheerio.wrap(cheerio);
+
 var scraper = function(params){
 
   return new Promise((resolve,reject) => {
