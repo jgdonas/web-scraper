@@ -1,20 +1,25 @@
 const request = require('request');
-let cheerio = require('cheerio');
-const advanced_cheerio = require('cheerio-advanced-selectors');
+const cheerio = require('cheerio');
 const _ = require('lodash');
-
-cheerio = advanced_cheerio.wrap(cheerio);
 
 var scraper = function(params){
 
   return new Promise((resolve,reject) => {
-    if(params.url === undefined){
+    
+    if (params.url === undefined) {
       reject('Undefined url param.');
-    }else if(params.get === undefined){
+    }
+    else if (params.get === undefined) {
       reject('Undefined get param.');
-    }else if(Object.keys(params.get).length === 0){
+    }
+    else if (0 === Object.keys(params.get).length) {
       reject('Empty get param.');
     }
+  
+    if(undefined === params.forEach){
+      params.forEach = 'html';
+    }
+
 
     request(params.url, function(error, response, html){
 
@@ -23,32 +28,21 @@ var scraper = function(params){
       }else{
 
         var data = [];
-        var $ = cheerio.load(html);
-
-        if(undefined === params.forEach){
-          params.forEach = 'html';
-        }
+        const $ = cheerio.load(html);
 
         $(params.forEach).map((index,element) => {
           var tempObject = {};
           Object.keys(params.get).forEach( key => {
-            var selector = params.get[key];
+            var selector = $(params.get[key]);
             var tempData = [];
+
             $(element).find(selector).each((i,element) => {
               var e = $(element);
-              if(e.is("a")){
-                var text = e.text().trim().replace(/[\t\n]+/g, '').replace(/  +/g, ' ');
-                var href = e.attr('href');
-                tempData.push({anchorText:text,href:href});
-              }else{
-                var text = e.text().trim().replace(/[\t\n]+/g, '').replace(/  +/g, ' ');
-                if(text.length > 0){
-                  tempData.push(text);
-                }
-              }
-              if(1 === tempData.length){       
+              tempData.push(extractData(e));
+              if (1 === tempData.length) {
                 tempObject[key] = tempData[0];
-              }else if(2 >= tempData.length){
+              }
+              else if (2 >= tempData.length) {
                 tempObject[key] = tempData;
               }
             });
@@ -68,6 +62,22 @@ var scraper = function(params){
       }
     });
   });
+}
+
+
+function extractData(element) {
+  let data;
+  let text = element.text().trim().replace(/[\t\n]+/g, '').replace(/  +/g, ' ');
+  if (element.is("a")) {
+    let href = element.attr('href');
+    data = { anchorText: text, href: href };
+  }
+  else {
+    if (text.length > 0) {
+     data = text;
+    }
+  }
+  return data;
 }
 
 module.exports = scraper;

@@ -187,4 +187,5 @@ describe('Web scraper', () => {
         done(new Error('Expected method to resolve.'))
       })
     })
+
 });
