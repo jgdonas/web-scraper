@@ -2,8 +2,8 @@ const request = require('request');
 const cheerio = require('cheerio');
 const _ = require('lodash');
 
-var scraper = function(params){
-
+var scraper = params => {
+  
   return new Promise((resolve,reject) => {
     
     if (params.url === undefined) {
@@ -24,7 +24,7 @@ var scraper = function(params){
     request(params.url, function(error, response, html){
 
       if(error){
-        reject('request error:', error);
+        reject('request error:' + error);
       }else{
 
         var data = [];
