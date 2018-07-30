@@ -119,7 +119,7 @@ var mySearch = {
   url : 'https://www.imdb.com/title/tt0133093/',
   get:{
     name: 'span[itemprop="name"]',
-    character: 'td.character'
+    character: 'td.character a'
   },
   forEach:'div#titleCast table tbody tr.even, div#titleCast table tbody tr.odd'
 } ;
