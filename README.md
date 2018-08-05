@@ -17,6 +17,47 @@ Briefly:
 for each **forEach** element found in the web DOM, **web-scraper** will return an object with the same structure as
 the **get** param containing the data in the corresponding property. Let's see some examples.
 
+#### How to use it
+
+Since **web-scraper** returns a Promise, given a correct search object (see examples below) you can choose between:
+
+* **then/catch**
+
+```js
+const scraper = require('@jose.donas/web-scraper');
+var mySearch = {...};
+
+scraper(mySearch)
+        .then( data => {
+            //**data** is the returned info by **scraper**. Do whatever you need with it
+        })
+        .catch(err => {
+            //Some error ocurred. Handle it!!
+        });
+
+```
+
+* **async/await**
+
+Cleaner option, but remember than you can only use **await** inside an **async** function:
+
+```js
+const scraper = require('@jose.donas/web-scraper');
+var mySearch = {...};
+
+(async() => {
+    try{
+        let data = await scraper(mySearch);
+        //do whatever you need with **data**
+    }catch(err){
+        //Some error ocurred. Handle it!!
+    }
+})();
+
+```
+
+Given 
+
 ## Examples
 
 In this example, we are fetching some data from [The Matrix page at IMDB](https://www.imdb.com/title/tt0133093/)
@@ -25,7 +66,7 @@ In this example, we are fetching some data from [The Matrix page at IMDB](https:
 
 Our search params will be:
 
-```
+```js
 var mySearch = {
   url : 'https://www.imdb.com/title/tt0133093/',
   get:{
@@ -35,7 +76,7 @@ var mySearch = {
 ```
 this will return:
 
-```
+```json
 {
     "filmTitle": "Matrix"
 }
@@ -50,7 +91,7 @@ We'll see it in some following examples, but let's continue with The Matrix.
 For every search, we can find several ways to get the desired data. In this case, we can get the film
 title with this configuration:
 
-```
+```js
 var mySearch = {
   url : 'https://www.imdb.com/title/tt0133093/',
   get:{
@@ -64,7 +105,7 @@ With this configuration we are requesting our scraper to search for a **strong**
 is children of **div#ratingWidget**. But in the inspected DOM, this only ocurrs one time. Any way, our scraper will
 ignore empty result, so again, we will get:
 
-```
+```json
 {
     "filmTitle": "Matrix"
 }
@@ -75,7 +116,7 @@ ignore empty result, so again, we will get:
 Since there is a **div** identified with **titleCast** containing all the cast, we can get
 all the names with:
 
-```
+```js
 var mySearch = {
   url : 'https://www.imdb.com/title/tt0133093/',
   get:{
@@ -88,7 +129,7 @@ var mySearch = {
 In this case, since there is **just one element** identified with 'div#titleCast', we are getting
 **just one object** containing an array of names, one for each actor/actress:
 
-```
+```json
  { names:
      [ 'Keanu Reeves',
        'Laurence Fishburne',
@@ -114,7 +155,7 @@ In this case, since there is **just one element** identified with 'div#titleCast
 What if we wanted to get a set of objects, containg each one the name of actor/actress and
 the name of the played character?
 
-```
+```js
 var mySearch = {
   url : 'https://www.imdb.com/title/tt0133093/',
   get:{
@@ -126,7 +167,7 @@ var mySearch = {
 ```
 Will return us:
 
-```
+```json
 [
     {
         "name": "Keanu Reeves",
@@ -197,46 +238,383 @@ Links ("a" elements) can be considered quite special because they contain a coup
 the **href** attribute and the **anchor text**. That's why when we ask our scraper to gather **a** elements, it'll
 return us both pieces of data. An example where we are interested in a single link:
 
-```
+```js
 var mySearch  = {
-  url: 'https://www.forocoches.com',
+  url: 'https://www.imdb.com/title/tt0133093/',
   get:{
-    linkToTwitter: 'ul#tablist a[target="_blank"]'
-  }
+    linkToPerson: 'td[itemprop="actor"] a'
+  },
+  forEach: 'div#titleCast table tbody tr'
 };
 ```
 
 Will return us:
 
-```
-{
-  "linkToTwitter":{
-    "anchorText": "Twitter FC",
-    "href":       "https://twitter.com/forocoches"
-   }
-}
+```json
+[
+    {
+        "linkToPerson": {
+            "anchorText": "Keanu Reeves",
+            "href": "/name/nm0000206/?ref_=tt_cl_t1"
+        }
+    },
+    {
+        "linkToPerson": {
+            "anchorText": "Laurence Fishburne",
+            "href": "/name/nm0000401/?ref_=tt_cl_t2"
+        }
+    },
+    {
+        "linkToPerson": {
+            "anchorText": "Carrie-Anne Moss",
+            "href": "/name/nm0005251/?ref_=tt_cl_t3"
+        }
+    },
+    {
+        "linkToPerson": {
+            "anchorText": "Hugo Weaving",
+            "href": "/name/nm0915989/?ref_=tt_cl_t4"
+        }
+    },
+    {
+        "linkToPerson": {
+            "anchorText": "Gloria Foster",
+            "href": "/name/nm0287825/?ref_=tt_cl_t5"
+        }
+    },
+    {
+        "linkToPerson": {
+            "anchorText": "Joe Pantoliano",
+            "href": "/name/nm0001592/?ref_=tt_cl_t6"
+        }
+    },
+    {
+        "linkToPerson": {
+            "anchorText": "Marcus Chong",
+            "href": "/name/nm0159059/?ref_=tt_cl_t7"
+        }
+    },
+    {
+        "linkToPerson": {
+            "anchorText": "Julian Arahanga",
+            "href": "/name/nm0032810/?ref_=tt_cl_t8"
+        }
+    },
+    {
+        "linkToPerson": {
+            "anchorText": "Matt Doran",
+            "href": "/name/nm0233391/?ref_=tt_cl_t9"
+        }
+    },
+    {
+        "linkToPerson": {
+            "anchorText": "Belinda McClory",
+            "href": "/name/nm0565883/?ref_=tt_cl_t10"
+        }
+    },
+    {
+        "linkToPerson": {
+            "anchorText": "Anthony Ray Parker",
+            "href": "/name/nm0662562/?ref_=tt_cl_t11"
+        }
+    },
+    {
+        "linkToPerson": {
+            "anchorText": "Paul Goddard",
+            "href": "/name/nm0323822/?ref_=tt_cl_t12"
+        }
+    },
+    {
+        "linkToPerson": {
+            "anchorText": "Robert Taylor",
+            "href": "/name/nm0853079/?ref_=tt_cl_t13"
+        }
+    },
+    {
+        "linkToPerson": {
+            "anchorText": "David Aston",
+            "href": "/name/nm0040058/?ref_=tt_cl_t14"
+        }
+    },
+    {
+        "linkToPerson": {
+            "anchorText": "Marc Aden Gray",
+            "href": "/name/nm0336802/?ref_=tt_cl_t15"
+        }
+    }
+]
 
 ```  
 
+#### 6. Grouping data
+
+Sometimes we may need to group the desired data. Let's see an example: in this case we are gathering players
+from [a random NBA game](https://www.basketball-reference.com/boxscores/200911060CHA.html)
+
+We could make a request to our scraper with this simple params:
+
+```js
+var mySearch  = {
+  url: 'https://www.basketball-reference.com/boxscores/200911060CHA.html',
+  get:{
+    playerName: 'th[csk]',
+    points:'td[data-stat="pts"]'
+  },
+  forEach: 'table#box_atl_basic tbody tr, table#box_cha_basic tbody tr'
+};
+```
+
+This is what we get:
+
+```json
+[
+    {
+        "playerName": "Joe Johnson",
+        "points": "13"
+    },
+    {
+        "playerName": "Marvin Williams",
+        "points": "9"
+    },
+    {
+        "playerName": "Al Horford",
+        "points": "10"
+    },
+    {
+        "playerName": "Josh Smith",
+        "points": "13"
+    },
+    {
+        "playerName": "Mike Bibby",
+        "points": "2"
+    },
+    {
+        "playerName": "Jamal Crawford",
+        "points": "13"
+    },
+    {
+        "playerName": "Maurice Evans",
+        "points": "10"
+    },
+    {
+        "playerName": "Jeff Teague",
+        "points": "4"
+    },
+    {
+        "playerName": "Zaza Pachulia",
+        "points": "8"
+    },
+    {
+        "playerName": "Joe Smith",
+        "points": "0"
+    },
+    {
+        "playerName": "Randolph Morris",
+        "points": "1"
+    },
+    {
+        "playerName": "Jason Collins",
+        "points": "0"
+    },
+    {
+        "playerName": "Gerald Wallace",
+        "points": "11"
+    },
+    {
+        "playerName": "Boris Diaw",
+        "points": "10"
+    },
+    {
+        "playerName": "Raja Bell",
+        "points": "24"
+    },
+    {
+        "playerName": "Tyson Chandler",
+        "points": "10"
+    },
+    {
+        "playerName": "Raymond Felton",
+        "points": "7"
+    },
+    {
+        "playerName": "D.J. Augustin",
+        "points": "11"
+    },
+    {
+        "playerName": "Ronald Murray",
+        "points": "15"
+    },
+    {
+        "playerName": "Nazr Mohammed",
+        "points": "8"
+    },
+    {
+        "playerName": "Stephen Graham",
+        "points": "2"
+    },
+    {
+        "playerName": "Vladimir Radmanovic",
+        "points": "2"
+    },
+    {
+        "playerName": "Derrick Brown",
+        "points": "2"
+    },
+    {
+        "playerName": "Gerald Henderson",
+        "points": "1"
+    }
+]
+```
+
+Yes, this way we'll get all the players with their respective points, but: what team did the play for?
+
+To get than info grouped by team, as each roster has it own table, we just need to pass an array instead
+a comma separated list of elements. In this example, note the transformation at 'forEach' field:
+
+
+```js
+var mySearch  = {
+  url: 'https://www.basketball-reference.com/boxscores/200911060CHA.html',
+  get:{
+    playerName: 'th[csk]',
+    points:'td[data-stat="pts"]'
+  },
+  forEach: ['table#box_atl_basic tbody tr', 'table#box_cha_basic tbody tr']
+};
+```
+
+Now, our scraper will search separetely all the players games and points inside each of the
+elements (in this case, tables) for those players, so at the end we'll get separated stats by teams,
+where each array position contains each team players and stats:
+
+```json
+[
+    [
+        {
+            "playerName": "Joe Johnson",
+            "points": "13"
+        },
+        {
+            "playerName": "Marvin Williams",
+            "points": "9"
+        },
+        {
+            "playerName": "Al Horford",
+            "points": "10"
+        },
+        {
+            "playerName": "Josh Smith",
+            "points": "13"
+        },
+        {
+            "playerName": "Mike Bibby",
+            "points": "2"
+        },
+        {
+            "playerName": "Jamal Crawford",
+            "points": "13"
+        },
+        {
+            "playerName": "Maurice Evans",
+            "points": "10"
+        },
+        {
+            "playerName": "Jeff Teague",
+            "points": "4"
+        },
+        {
+            "playerName": "Zaza Pachulia",
+            "points": "8"
+        },
+        {
+            "playerName": "Joe Smith",
+            "points": "0"
+        },
+        {
+            "playerName": "Randolph Morris",
+            "points": "1"
+        },
+        {
+            "playerName": "Jason Collins",
+            "points": "0"
+        }
+    ],
+    [
+        {
+            "playerName": "Gerald Wallace",
+            "points": "11"
+        },
+        {
+            "playerName": "Boris Diaw",
+            "points": "10"
+        },
+        {
+            "playerName": "Raja Bell",
+            "points": "24"
+        },
+        {
+            "playerName": "Tyson Chandler",
+            "points": "10"
+        },
+        {
+            "playerName": "Raymond Felton",
+            "points": "7"
+        },
+        {
+            "playerName": "D.J. Augustin",
+            "points": "11"
+        },
+        {
+            "playerName": "Ronald Murray",
+            "points": "15"
+        },
+        {
+            "playerName": "Nazr Mohammed",
+            "points": "8"
+        },
+        {
+            "playerName": "Stephen Graham",
+            "points": "2"
+        },
+        {
+            "playerName": "Vladimir Radmanovic",
+            "points": "2"
+        },
+        {
+            "playerName": "Derrick Brown",
+            "points": "2"
+        },
+        {
+            "playerName": "Gerald Henderson",
+            "points": "1"
+        }
+    ]
+]
+```
+
+
+
 Check out the [test folder](https://github.com/jgdonas/web-scraper/tree/master/test) to find more examples.
 
-### Tests
+
+## Tests
 
 You can run the tests executing
 
-```
+```js
 npm test
 ```
 from console.
 
-### Installation
+## Installation
 
 Installation is quite easy using npm:
 
-```
+```js
 npm i @jose.donas/web-scraper
 ```
-Actually, you can get more interesting info about this module at [web-scraper npm web page](https://www.npmjs.com/package/@jose.donas/web-scraper)
+You can get some extra info about this module at [web-scraper npm web page](https://www.npmjs.com/package/@jose.donas/web-scraper)
 
 ## Author
 
