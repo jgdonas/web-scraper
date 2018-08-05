@@ -35,6 +35,8 @@ var scraper = params => {
 
         for(var eachParam of params.forEach){
 
+          var thisParamData = [];
+
           $(eachParam).map((index,element) => {
 
             var tempObject = {};
@@ -55,15 +57,22 @@ var scraper = params => {
             });
   
             if(!_.isEmpty(tempObject)){
-              data.push(tempObject);
+              thisParamData.push(tempObject);
             }
   
           });
 
+          data.push(thisParamData);
+
         }
 
-        if(1 === data.length){
-          data = data[0]               
+        //remove unnecessary arrays. There are two possible cases when this happens:
+        //two nested arrays of dimension 1
+        //a single array of dimension 1
+        if(1 === data.length && 1 === data[0].length){
+          data = data[0][0];            
+        }else if(1=== data.length){
+          data = data[0];
         }
 
         resolve(data);

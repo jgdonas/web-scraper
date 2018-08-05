@@ -86,7 +86,7 @@ describe('Web scraper', () => {
 
     });
 
-    it('should return the expected single element',done => {
+    it('should return the expected single element', done => {
 
       var mySearch  = {
         url: 'http://usatoday30.usatoday.com/sports/baseball/sbfant.htm',
@@ -188,7 +188,7 @@ describe('Web scraper', () => {
       })
     });
 
-    it('should return as many groupe data elements are in "forEach" field', async () => {
+    it('should return as many grouped data elements are in "forEach" field', async () => {
 
       var mySearch = {
         url: 'https://en.wikipedia.org/wiki/Antequera',
@@ -200,9 +200,12 @@ describe('Web scraper', () => {
 
       let data = await scraper(mySearch);
 
+      assert.isArray(data);
+      assert.isArray(data[0]);
+      assert.isArray(data[1]);
       assert.equal(2, data.length);
-      assert.equal(data[0].randomValue, 'Economy');
-      assert.equal(data[1].randomValue, 'Citations');
+      assert.equal(data[0][0].randomValue, 'Economy');
+      assert.equal(data[1][0].randomValue, 'Citations');
     });
 
 });
