@@ -1,6 +1,6 @@
 {
   "name": "@jose.donas/web-scraper",
-  "version": "1.2.3",
+  "version": "1.3.3",
   "description": "A simple web scraper for node.js using promises and css selectors.",
   "main": "index.js",
   "scripts": {
