@@ -20,7 +20,6 @@ var scraper = params => {
       params.forEach = 'html';
     }
 
-
     request(params.url, function(error, response, html){
 
       if(error){
@@ -30,29 +29,38 @@ var scraper = params => {
         var data = [];
         const $ = cheerio.load(html);
 
-        $(params.forEach).map((index,element) => {
-          var tempObject = {};
-          Object.keys(params.get).forEach( key => {
-            var selector = $(params.get[key]);
-            var tempData = [];
+        if(!Array.isArray(params.forEach)){
+          params.forEach = [params.forEach];
+        }
 
-            $(element).find(selector).each((i,element) => {
-              var e = $(element);
-              tempData.push(extractData(e));
-              if (1 === tempData.length) {
-                tempObject[key] = tempData[0];
-              }
-              else if (2 >= tempData.length) {
-                tempObject[key] = tempData;
-              }
+        for(var eachParam of params.forEach){
+
+          $(eachParam).map((index,element) => {
+
+            var tempObject = {};
+            Object.keys(params.get).forEach( key => {
+              var selector = $(params.get[key]);
+              var tempData = [];
+  
+              $(element).find(selector).each((i,element) => {
+                var e = $(element);
+                tempData.push(extractData(e));
+                if (1 === tempData.length) {
+                  tempObject[key] = tempData[0];
+                }
+                else if (2 >= tempData.length) {
+                  tempObject[key] = tempData;
+                }
+              });
             });
+  
+            if(!_.isEmpty(tempObject)){
+              data.push(tempObject);
+            }
+  
           });
 
-          if(!_.isEmpty(tempObject)){
-            data.push(tempObject);
-          }
-
-        });
+        }
 
         if(1 === data.length){
           data = data[0]               

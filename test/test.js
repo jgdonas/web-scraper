@@ -186,6 +186,23 @@ describe('Web scraper', () => {
       .catch(err => {
         done(new Error('Expected method to resolve.'))
       })
-    })
+    });
+
+    it('should return as many groupe data elements are in "forEach" field', async () => {
+
+      var mySearch = {
+        url: 'https://en.wikipedia.org/wiki/Antequera',
+        get: {
+          randomValue: 'span.toctext'
+        },
+        forEach:['a[href="#Economy"]', 'a[href="#Citations"]']
+      };
+
+      let data = await scraper(mySearch);
+
+      assert.equal(2, data.length);
+      assert.equal(data[0].randomValue, 'Economy');
+      assert.equal(data[1].randomValue, 'Citations');
+    });
 
 });
