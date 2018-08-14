@@ -1,6 +1,6 @@
 
-
-# web-scraper [![Build Status](https://travis-ci.org/jgdonas/web-scraper.svg?branch=master)](https://travis-ci.org/jgdonas/web-scraper)
+[![npm](https://img.shields.io/npm/dt/localeval.svg)](https://www.npmjs.com/package/@jose.donas/web-scraper) [![Build Status](https://travis-ci.org/jgdonas/web-scraper.svg?branch=master)](https://travis-ci.org/jgdonas/web-scraper) ![Hex.pm](https://img.shields.io/hexpm/l/plug.svg) [![NpmVersion](https://img.shields.io/npm/v/npm.svg)](https://www.npmjs.com/package/@jose.donas/web-scraper)
+# web-scraper 
 A simple web scraper for node.js using promises and css selectors.
 
 ## How it works
