@@ -1,5 +1,6 @@
 
-[![Build Status](https://travis-ci.org/jgdonas/web-scraper.svg?branch=master)](https://travis-ci.org/jgdonas/web-scraper) ![Hex.pm](https://img.shields.io/hexpm/l/plug.svg)
+[![Build Status](https://travis-ci.org/jgdonas/web-scraper.svg?branch=master)](https://travis-ci.org/jgdonas/web-scraper) ![Hex.pm](https://img.shields.io/hexpm/l/plug.svg) <a href="https://www.npmjs.com/package/@jose.donas/web-scraper"><img src="https://img.shields.io/npm/v/@jose.donas/web-scraper.svg?style=flat" alt="NPM version"></a> <a href="https://www.npmjs.com/package/@jose.donas/web-scraper"><img src="https://img.shields.io/npm/dt/@jose.donas/web-scraper.svg?style=flat" alt="NPM downloads"></a>
+
 # web-scraper 
 A simple web scraper for node.js using promises and css selectors.
 
