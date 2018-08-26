@@ -167,19 +167,19 @@ describe('Web scraper', () => {
       var mySearch  = {
         url: 'https://www.forocoches.com',
         get:{
-          linkToTwitter: 'ul#tablist a[target="_blank"]'
+          linkToPass: 'ul#tablist a[href="/invitacion/"]'
         }
       };
 
       scraper(mySearch)
       .then( data => {
-        const expectedAnchorText = 'Twitter FC';
-        const expectedHref = 'https://twitter.com/forocoches'
+        const expectedAnchorText = 'Invitaciones';
+        const expectedHref = '/invitacion/'
         assert.isDefined(data);
-        assert.isDefined(data.linkToTwitter.anchorText);
-        assert.isDefined(data.linkToTwitter.href);
-        expect(data.linkToTwitter.anchorText).to.equal(expectedAnchorText);
-        expect(data.linkToTwitter.href).to.equal(expectedHref);
+        assert.isDefined(data.linkToPass.anchorText);
+        assert.isDefined(data.linkToPass.href);
+        expect(data.linkToPass.anchorText).to.equal(expectedAnchorText);
+        expect(data.linkToPass.href).to.equal(expectedHref);
         done();
       })
       .catch(done)
