@@ -56,8 +56,6 @@ var mySearch = {...};
 
 ```
 
-Given 
-
 ## Examples
 
 In this example, we are fetching some data from [The Matrix page at IMDB](https://www.imdb.com/title/tt0133093/)
