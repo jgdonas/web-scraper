@@ -32,7 +32,7 @@ scraper(mySearch)
         .then( data => {
             //**data** is the returned info by **scraper**. Do whatever you need with it
         })
-        .catch(err => {
+        .catch( err => {
             //Some error ocurred. Handle it!!
         });
 
@@ -40,7 +40,7 @@ scraper(mySearch)
 
 * **async/await**
 
-Cleaner option, but remember than you can only use **await** inside an **async** function:
+Cleaner option, but remember that you can only use **await** inside an **async** function:
 
 ```js
 const scraper = require('@jose.donas/web-scraper');
@@ -81,7 +81,7 @@ this will return:
 }
 ```
 
-Notice that the result will be an array, only if the search result contains more than one element.
+Notice that the result will be an array only if the search result contains more than one element.
 This way you will need to check wether the result is a single element or a set of them.
 We'll see it in some following examples, but let's continue with The Matrix.
 
@@ -101,8 +101,7 @@ var mySearch = {
 ```
 
 With this configuration we are requesting our scraper to search for a **strong** element inside every **p** that 
-is children of **div#ratingWidget**. But in the inspected DOM, this only ocurrs one time. Any way, our scraper will
-ignore empty result, so again, we will get:
+is children of **div#ratingWidget**. But in the inspected DOM, this only ocurrs one time, so again, we will get:
 
 ```json
 {
@@ -125,7 +124,7 @@ var mySearch = {
 } ;
 ```
 
-In this case, since there is **just one element** identified with 'div#titleCast', we are getting
+In this case, as there is **just one element** identified with 'div#titleCast', we are getting
 **just one object** containing an array of names, one for each actor/actress:
 
 ```json
@@ -151,7 +150,7 @@ In this case, since there is **just one element** identified with 'div#titleCast
 
 #### 4. Get one object for each actor and actress, containing the character's name too.
 
-What if we wanted to get a set of objects, containg each one the name of actor/actress and
+What if we wanted to get a set of objects, containg each one the name of the actor/actress and
 the name of the played character?
 
 ```js
@@ -235,7 +234,7 @@ Will return us:
 
 Links ("a" elements) can be considered quite special because they contain a couple of elements we may want to store:
 the **href** attribute and the **anchor text**. That's why when we ask our scraper to gather **a** elements, it'll
-return us both pieces of data. An example where we are interested in a single link:
+return us both pieces of data. An example where we are interested in a set of links:
 
 ```js
 var mySearch  = {
@@ -466,7 +465,7 @@ This is what we get:
 ]
 ```
 
-Yes, this way we'll get all the players with their respective points, but: what team did the play for?
+Yes, this way we'll get all the players with their respective points, but: what team did they play for?
 
 To get than info grouped by team, as each roster has it own table, we just need to pass an array instead
 a comma separated list of elements. In this example, note the transformation at 'forEach' field:
