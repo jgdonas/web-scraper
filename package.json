@@ -1,6 +1,6 @@
 {
   "name": "@jose.donas/web-scraper",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "A simple web scraper for node.js using promises and css selectors.",
   "main": "index.js",
   "scripts": {
@@ -26,11 +26,10 @@
   "homepage": "https://github.com/jgdonas/web-scraper#readme",
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",
-    "nyc": "^13.0.1",
-    "request": "^2.87.0",
-    "require": "^2.4.20"
+    "request": "^2.87.0"
   },
   "devDependencies": {
+    "nyc": "^13.0.1",
     "chai": "^4.1.2",
     "mocha": "^5.2.0"
   },
