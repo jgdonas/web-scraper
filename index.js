@@ -1,6 +1,5 @@
 const request = require('request');
 const cheerio = require('cheerio');
-const _ = require('lodash');
 
 var scraper = params => {
   
@@ -41,6 +40,7 @@ var scraper = params => {
 
             var tempObject = {};
             var tempObjectHasData = false;
+            
             Object.keys(params.get).forEach( key => {
               var selector = $(params.get[key]);
               var tempData = [];
