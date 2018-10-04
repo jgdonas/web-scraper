@@ -604,7 +604,7 @@ You can run the tests executing
 ```js
 npm test
 ```
-from console.
+from console (after you set your current directory to the project root). After tests execution, you'll have access to a coverage report both at the terminal and coverage folder (that will be created automatically) which contains an html report (simply double click on index.html to access a more detailed report).
 
 ## Installation
 

@@ -4,7 +4,7 @@
   "description": "A simple web scraper for node.js using promises and css selectors.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --reporter spec --timeout 5000",
+    "test": "nyc --reporter=html --reporter=text mocha --timeout 5000",
     "cover": "node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha -- -R spec test/*"
   },
   "repository": {
@@ -26,12 +26,12 @@
   "homepage": "https://github.com/jgdonas/web-scraper#readme",
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",
+    "nyc": "^13.0.1",
     "request": "^2.87.0",
     "require": "^2.4.20"
   },
   "devDependencies": {
     "chai": "^4.1.2",
-    "coveralls": "^3.0.2",
     "mocha": "^5.2.0"
   },
   "directories": {

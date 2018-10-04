@@ -40,6 +40,7 @@ var scraper = params => {
           $(eachParam).map((index,element) => {
 
             var tempObject = {};
+            var tempObjectHasData = false;
             Object.keys(params.get).forEach( key => {
               var selector = $(params.get[key]);
               var tempData = [];
@@ -49,14 +50,16 @@ var scraper = params => {
                 tempData.push(extractData(e));
                 if (1 === tempData.length) {
                   tempObject[key] = tempData[0];
+                  tempObjectHasData = true;
                 }
                 else if (2 >= tempData.length) {
                   tempObject[key] = tempData;
+                  tempObjectHasData = true;
                 }
               });
             });
   
-            if(!_.isEmpty(tempObject)){
+            if(tempObjectHasData){
               thisParamData.push(tempObject);
             }
   
@@ -71,7 +74,7 @@ var scraper = params => {
         //a single array of dimension 1
         if(1 === data.length && 1 === data[0].length){
           data = data[0][0];            
-        }else if(1=== data.length){
+        }else if(1 === data.length){
           data = data[0];
         }
 
